@@ -5,6 +5,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let randomNumber = Math.floor(Math.random() * 100) + 1
     let attempts = 0
 
+    guessInput.addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+      event.preventDefault() // Evita que a página seja recarregada
+      guessButton.click()
+    }
+  })
+
     guessButton.addEventListener('click', () => {
         const userGuess = parseInt(guessInput.value)
         attempts++
