@@ -4,18 +4,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const message = document.getElementById('message')
     let randomNumber = Math.floor(Math.random() * 100) + 1
     let attempts = 0
+   document.getElementById('attempts').textContent += attempts
 
     guessInput.addEventListener("keypress", function(event) {
-    if (event.key === "Enter") {
-      event.preventDefault() // Evita que a página seja recarregada
-      guessButton.click()
-    }
-  })
+        if (event.key === "Enter") {
+        event.preventDefault() // Evita que a página seja recarregada
+        guessButton.click()
+        }
+    })
 
     guessButton.addEventListener('click', () => {
         const userGuess = parseInt(guessInput.value)
         attempts++
-
+        document.getElementById('attempts').textContent = "Tentativas: "+ attempts
         if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
             message.textContent = 'Por favor, insira um número válido entre 1 e 100.'
             return
