@@ -52,3 +52,8 @@ button:hover {
 #message.wrong {
     color: #ffa500;
 }
+
+#history {
+    margin-top: 20px;
+    font-size: 18px;
+}
