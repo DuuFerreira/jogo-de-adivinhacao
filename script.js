@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const guessInput = document.getElementById('guessInput')
     const guessButton = document.getElementById('guessButton')
     const message = document.getElementById('message')
+    document.getElementById('guessButton').innerText = "Adivinhar"
+    
     let randomNumber = Math.floor(Math.random() * 100) + 1
     let attempts = 0
    document.getElementById('attempts').textContent += attempts
@@ -14,6 +16,12 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
     guessButton.addEventListener('click', () => {
+        //Verifica o valor no botão, posso fazer assim ou obrigar a pagina a recarregar.
+        //Mas preferi fazer desta forma ao invés de utilizar 2 botões e ficar alternando entre eles.
+        //Em questões de processamento, não sei o quão relevante é, mas se for muito ruim eu arrumo posteriormente.
+        if(document.getElementById('guessButton').innerText==="Jogar Novamente"){
+            document.getElementById('guessButton').innerText="Adivinhar"
+        }
         const userGuess = parseInt(guessInput.value)
         attempts++
         document.getElementById('attempts').textContent = "Tentativas: "+ attempts
@@ -27,7 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
             message.textContent = `Parabéns! Você acertou o número ${randomNumber} em ${attempts} tentativas.`
             message.classList.add('right')
             randomNumber = Math.floor(Math.random() * 100) + 1
-            attempts = 0
+            attempts = -1
+            document.getElementById('guessButton').innerText = "Jogar Novamente"
         } else if (userGuess < randomNumber) {
             message.textContent = 'Tente um número maior!'
             message.classList.add('wrong')
