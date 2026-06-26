@@ -32,13 +32,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         message.classList.remove('right', 'wrong')
-        
+        guessHistory.innerText += guessInput.value + '\n'
         if (userGuess === randomNumber) {
             message.textContent = `Parabéns! Você acertou o número ${randomNumber} em ${attempts} tentativas.`
             message.classList.add('right')
             randomNumber = Math.floor(Math.random() * 100) + 1
             attempts = -1
             document.getElementById('guessButton').innerText = "Jogar Novamente"
+            guessHistory.innerHTML = ''
         } else if (userGuess < randomNumber) {
             message.textContent = 'Tente um número maior!'
             message.classList.add('wrong')
@@ -46,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
             message.textContent = 'Tente um número menor!'
             message.classList.add('wrong')
         }
-        guessHistory.innerText += guessInput.value + '\n'
+        
         guessInput.value = ''
         guessInput.focus()
     })
