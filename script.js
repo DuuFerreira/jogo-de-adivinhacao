@@ -4,9 +4,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const message = document.getElementById('message')
     const guessHistory = document.getElementById('guessHistory')
     document.getElementById('guessButton').innerText = "Adivinhar"
+   
+    
     
     let randomNumber = Math.floor(Math.random() * 100) + 1
     let attempts = 0
+    let orderedArray = []
+
    document.getElementById('attempts').textContent += attempts
 
     guessInput.addEventListener("keypress", function(event) {
@@ -31,8 +35,12 @@ document.addEventListener('DOMContentLoaded', () => {
             return
         }
 
+        //Ordena o histórico de tentativas
+        orderedArray.push(userGuess);
+        orderedArray.sort((a, b) => a - b);
+        guessHistory.innerText = orderedArray.join("\n");
+
         message.classList.remove('right', 'wrong')
-        guessHistory.innerText += guessInput.value + '\n'
         if (userGuess === randomNumber) {
             message.textContent = `Parabéns! Você acertou o número ${randomNumber} em ${attempts} tentativas.`
             message.classList.add('right')
