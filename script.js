@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
             attempts = -1
             document.getElementById('guessButton').innerText = "Jogar Novamente"
             guessHistory.innerHTML = ''
+            orderedArray = []
         } else if (userGuess < randomNumber) {
             message.textContent = 'Tente um número maior!'
             message.classList.add('wrong')
