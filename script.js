@@ -3,15 +3,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const guessButton = document.getElementById('guessButton')
     const message = document.getElementById('message')
     const guessHistory = document.getElementById('guessHistory')
-    document.getElementById('guessButton').innerText = "Adivinhar"
-   
-    
-    
-    let randomNumber = Math.floor(Math.random() * 100) + 1
+    const attemptsDisplay = document.getElementById('attempts')
+ 
+    let randomNumber = generateRandomNumber()
     let attempts = 0
     let orderedArray = []
 
-   document.getElementById('attempts').textContent += attempts
+    attemptsDisplay.textContent += attempts
 
     guessInput.addEventListener("keypress", function(event) {
         if (event.key === "Enter") {
@@ -21,34 +19,23 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
     guessButton.addEventListener('click', () => {
-        if(document.getElementById('guessButton').innerText==="Jogar Novamente"){
-            //Verifica o valor no botão, posso fazer assim ou obrigar a pagina a recarregar.
-            //Mas preferi fazer desta forma ao invés de utilizar 2 botões e ficar alternando entre eles.
-            //Em questões de processamento, não sei o quão relevante é, mas se for muito ruim eu arrumo posteriormente.
-            document.getElementById('guessButton').innerText="Adivinhar"
+        if(message.classList.contains('right')){
+            guessButton.innerText="Adivinhar"
         }
         const userGuess = parseInt(guessInput.value)
-        attempts++
-        document.getElementById('attempts').textContent = "Tentativas: "+ attempts
+        updateAttempts()
         if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
             message.textContent = 'Por favor, insira um número válido entre 1 e 100.'
             return
         }
-
         //Ordena o histórico de tentativas
-        orderedArray.push(userGuess);
-        orderedArray.sort((a, b) => a - b);
-        guessHistory.innerText = orderedArray.join("\n");
+        updateHistory(userGuess)
 
         message.classList.remove('right', 'wrong')
         if (userGuess === randomNumber) {
             message.textContent = `Parabéns! Você acertou o número ${randomNumber} em ${attempts} tentativas.`
             message.classList.add('right')
-            randomNumber = Math.floor(Math.random() * 100) + 1
-            attempts = -1
-            document.getElementById('guessButton').innerText = "Jogar Novamente"
-            guessHistory.innerHTML = ''
-            orderedArray = []
+            restart()
         } else if (userGuess < randomNumber) {
             message.textContent = 'Tente um número maior!'
             message.classList.add('wrong')
@@ -60,4 +47,27 @@ document.addEventListener('DOMContentLoaded', () => {
         guessInput.value = ''
         guessInput.focus()
     })
+
+    function restart(){
+        randomNumber = generateRandomNumber()
+        attempts = -1
+        guessButton.innerText = "Jogar Novamente"
+        guessHistory.innerHTML = ''
+        orderedArray = []
+    }
+
+    function generateRandomNumber() {
+        return Math.floor(Math.random() * 100) + 1
+    }
+
+    function updateHistory(userGuess){
+        orderedArray.push(userGuess);
+        orderedArray.sort((a, b) => a - b);
+        guessHistory.innerText = orderedArray.join("\n");
+    }
+
+    function updateAttempts(){
+        attempts++
+        attemptsDisplay.textContent = "Tentativas: "+ attempts
+    }
 })
