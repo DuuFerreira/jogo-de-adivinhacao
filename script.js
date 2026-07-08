@@ -20,15 +20,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     guessButton.addEventListener('click', () => {
         if(message.classList.contains('right')){
-            guessButton.innerText="Adivinhar"
+            guessButton.textContent="Adivinhar"
         }
-        const userGuess = parseInt(guessInput.value)
+        const userGuess = Number(guessInput.value)
+
         updateAttempts()
+        
         if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
             message.textContent = 'Por favor, insira um número válido entre 1 e 100.'
             return
         }
-        //Ordena o histórico de tentativas
+
         updateHistory(userGuess)
 
         message.classList.remove('right', 'wrong')
@@ -43,16 +45,16 @@ document.addEventListener('DOMContentLoaded', () => {
             message.textContent = 'Tente um número menor!'
             message.classList.add('wrong')
         }
+
+        clearInput()
         
-        guessInput.value = ''
-        guessInput.focus()
     })
 
     function restart(){
         randomNumber = generateRandomNumber()
         attempts = -1
-        guessButton.innerText = "Jogar Novamente"
-        guessHistory.innerHTML = ''
+        guessButton.textContent = "Jogar Novamente"
+        guessHistory.textContent = ''
         orderedArray = []
     }
 
@@ -63,11 +65,16 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateHistory(userGuess){
         orderedArray.push(userGuess);
         orderedArray.sort((a, b) => a - b);
-        guessHistory.innerText = orderedArray.join("\n");
+        guessHistory.textContent = orderedArray.join("\n");
     }
 
     function updateAttempts(){
         attempts++
         attemptsDisplay.textContent = "Tentativas: "+ attempts
+    }
+
+    function clearInput(){
+        guessInput.value = ''
+        guessInput.focus()
     }
 })
